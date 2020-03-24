@@ -41,7 +41,7 @@ fetch(apiURL + "/games", {
         gameElements += `<h1>${arrayOfGames[i].title}</h1> 
                             <img src="${arrayOfGames[i].imageUrl}" />
                             <p>${arrayOfGames[i].description}</p> 
-                            <button class="delete-btn" onclick="deleteGame("${arrayOfGames[i]._id}")">Delete</button>`;
+                            <button class="delete-btn" onclick="deleteGame('${arrayOfGames[i]._id}')">Delete</button>`;
 
     }
     container1.innerHTML = gameElements;
@@ -57,6 +57,7 @@ function deleteGame(gameID) {
         return r.text();
     }).then(function(apiresponse){
         console.log(apiresponse);
+        location.reload(true);
     });
 
 }
