@@ -81,15 +81,17 @@ document.querySelector(".submitBtn").addEventListener("click", function(event){
 
 
     if(gameTitle.value !== "" && gameGenre.value !== "" && gameImageUrl.value !== "" && gameRelease.value !== "") {
-        const requestParams = {
-            title: gameTitle.value,
-            releaseDate: gameRelease.value,
-            genre: gameGenre.value,
-            publisher: gamePublisher.value,
-            imageUrl: gameImageUrl.value,
-            description: gameDescription.value
-        };
-        createGameRequest(requestParams);
+     
+
+        var urlencoded = new URLSearchParams();
+        urlencoded.append("title", gameTitle.value);
+        urlencoded.append("releaseDate", gameRelease.value);
+        urlencoded.append("genre", gameGenre.value);
+        urlencoded.append("publisher", gamePublisher.value);
+        urlencoded.append("imageUrl", gameImageUrl.value);
+        urlencoded.append("description", gameDescription.value);
+
+        createGameRequest(urlencoded);
     }
 })
 
@@ -128,7 +130,11 @@ function createGameRequest(gameObject){
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: JSON.stringify(gameObject)
+        body: gameObject
+    }).then(function(response){
+        return response.text();
+    }).then(function(createdGame){
+        console.log(createdGame);
     });
 }
 
